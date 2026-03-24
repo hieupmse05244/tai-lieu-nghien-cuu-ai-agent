@@ -1,0 +1,18 @@
+{
+  "taskName": "design-database-schema",
+  "agentName": "Coder",
+  "timestamp": "2026-03-24T07-12-35-502Z",
+  "response": {
+    "files": [
+      {
+        "path": "backend/src/models/Group.ts",
+        "content": "import { Document, model, Schema } from 'mongoose';\n\n/**\n * Interface representing a Group.\n */\nexport interface Group extends Document {\n  name: string;\n  description: string;\n  adminId: string;\n  members: string[];\n  telegramChatId?: string;\n  createdAt: Date;\n}\n\n/**\n * Mongoose schema for Group.\n */\nconst GroupSchema = new Schema<Group>({\n  name: { type: String, required: true },\n  description: { type: String, required: true },\n  adminId: { type: String, required: true },\n  members: [{ type: String, required: true }],\n  telegramChatId: { type: String },\n  createdAt: { type: Date, default: Date.now }\n});\n\nexport const GroupModel = model<Group>('Group', GroupSchema);"
+      },
+      {
+        "path": "backend/src/models/Task.ts",
+        "content": "import { Document, model, Schema } from 'mongoose';\n\n/**\n * Interfaces for recurrence options in a Task.\n */\ninterface Recurrence {\n  type: 'daily' | 'weekly' | 'custom';\n  daysOfWeek?: number[];\n  time: string;\n}\n\n/**\n * Interface representing a Task.\n */\nexport interface Task extends Document {\n  groupId: string;\n  title: string;\n  description: string;\n  assignees: string[];\n  rotationIndex: number;\n  unavailableMembers: string[];\n  recurrence: Recurrence;\n  status: 'active' | 'paused';\n}\n\n/**\n * Mongoose schema for Task.\n */\nconst TaskSchema = new Schema<Task>({\n  groupId: { type: String, required: true },\n  title: { type: String, required: true },\n  description: { type: String, required: true },\n  assignees: [{ type: String, required: true }],\n  rotationIndex: { type: Number, required: true },\n  unavailableMembers: [{ type: String }],\n  recurrence: {\n    type: { type: String, enum: ['daily', 'weekly', 'custom'], required: true },\n    daysOfWeek: [{ type: Number }],\n    time: { type: String, required: true }\n  },\n  status: { type: String, enum: ['active', 'paused'], required: true }\n});\n\nexport const TaskModel = model<Task>('Task', TaskSchema);"
+      }
+    ],
+    "reasoning": "Mã nguồn trên định nghĩa 2 mô hình cơ bản cho hệ thống nhắc nhở hàng ngày, bao gồm `Group` và `Task`. Các mô hình này dựa trên cấu trúc tài liệu trong Contract.md, đảm bảo chứa các thuộc tính cần thiết như danh sách thành viên cho nhóm và thông tin về nhiệm vụ cũng như lịch lặp lại cho nhiệm vụ. Sử dụng Mongoose giúp quản lý cơ sở dữ liệu MongoDB một cách hiệu quả, đồng thời cũng xử lý các kiểu dữ liệu một cách chặt chẽ nhờ vào TypeScript."
+  }
+}

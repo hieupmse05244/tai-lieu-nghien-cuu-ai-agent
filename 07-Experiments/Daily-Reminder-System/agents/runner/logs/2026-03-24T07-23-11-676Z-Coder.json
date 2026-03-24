@@ -1,0 +1,14 @@
+{
+  "taskName": "tech-config-validation",
+  "agentName": "Coder",
+  "timestamp": "2026-03-24T07-23-11-676Z",
+  "response": {
+    "files": [
+      {
+        "path": "backend/src/config/env.ts",
+        "content": "import { z } from 'zod';\n\n// Define the shape of the environment variables\nconst envSchema = z.object({\n  MONGO_URI: z.string().url(),\n  JWT_SECRET: z.string().min(32), // JWT Secret should be at least 32 characters\n  TELEGRAM_TOKEN: z.string(),\n  RATE_LIMIT_MAX: z.preprocess((val) => parseInt(val as string, 10), z.number().min(1)),\n  RATE_LIMIT_WINDOW: z.preprocess((val) => parseInt(val as string, 10), z.number().min(1)),\n});\n\n// Validating the environment variables\nconst _env = envSchema.safeParse(process.env);\n\nif (!_env.success) {\n  // If validation fails, output the error to the console and exit the process\n  console.error('❌ Invalid environment variables:', _env.error.format());\n  process.exit(1);\n}\n\nexport const env = _env.data;\n"
+      }
+    ],
+    "reasoning": "Trong phần mã nguồn trên, tôi đã triển khai yêu cầu xác thực các biến môi trường bằng cách sử dụng thư viện `zod`. Đây là một bước quan trọng để đảm bảo cấu hình môi trường chuẩn xác và nhất quán, điều này giúp tránh lỗi hệ thống do các thiết lập cấu hình không hợp lệ.\n\n1. **Validation**: Áp dụng Zod để xác thực định dạng của các biến môi trường, ví dụ URL hợp lệ cho `MONGO_URI`, và yêu cầu tối thiểu 32 ký tự cho `JWT_SECRET` nhằm đảm bảo an toàn.\n\n2. **Config Management**: Tất cả các biến môi trường (env) được xác thực tập trung tại một file `src/config/env.ts`, tạo một nơi duy nhất quản lý cấu hình, dễ dàng cho bảo trì và kiểm soát.\n\n3. **Security (Sanitization)**: Khóa bí mật (`JWT_SECRET`) được kiểm tra độ dài, và tất cả các biến số (`RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW`) được chuyển đổi và kiểm tra tính hợp lệ, đảm bảo các giá trị được máy hiểu chính xác.\n\n4. **Error Handling**: Sử dụng `safeParse` của Zod để an toàn bắt các lỗi cấu hình, hiển thị chi tiết lỗi nếu không hợp lệ để dễ dàng khắc phục.\n\n5. **Standardization**: Đặt cấu hình file theo định dạng `kebab-case` và hoàn toàn trong ES6 Modules, tuân thủ chuẩn quốc tế cho mã nguồn.\n\n6. **Termination on Error**: Khi phát hiện lỗi trong cấu hình môi trường, ứng dụng sẽ dừng hoàn toàn (`process.exit(1);`) để tránh chạy trạng thái không ổn định.\n\nPhần mã này thiết lập nền tảng vững chắc cho môi trường phát triển, đảm bảo rằng mọi biến môi trường được kiểm tra ngay từ khi ứng dụng bắt đầu, giảm thiểu nguy cơ lỗi trong môi trường sản phẩm và đơn giản hóa việc khắc phục sự cố."
+  }
+}

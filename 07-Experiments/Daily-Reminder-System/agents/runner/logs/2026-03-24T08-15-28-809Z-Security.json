@@ -1,0 +1,10 @@
+{
+  "taskName": "Review",
+  "agentName": "Security",
+  "timestamp": "2026-03-24T08-15-28-809Z",
+  "response": {
+    "safety_score": 9,
+    "passed": true,
+    "vulnerabilities": []
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "taskName": "tech-base-architecture",
+  "agentName": "Coder",
+  "timestamp": "2026-03-24T07-26-58-194Z",
+  "response": {
+    "files": [
+      {
+        "path": "backend/src/middleware/error-handler.ts",
+        "content": "import { Request, Response, NextFunction } from 'express';\nimport { CustomError } from '../utils/custom-error';\nimport logger from '../utils/logger';\n\nexport function errorHandlerMiddleware(err: CustomError, req: Request, res: Response, next: NextFunction): void {\n  const requestId = req.headers['x-request-id'] || 'unknown';\n  logger.error({\n    message: err.message,\n    name: err.name,\n    stack: err.stack,\n    requestId\n  });\n\n  const statusCode = err.statusCode || 500;\n  res.status(statusCode).json({\n    success: false,\n    error: {\n      message: err.message,\n      details: err.details || 'An unexpected error occurred'\n    }\n  });\n}"
+      },
+      {
+        "path": "backend/src/utils/custom-error.ts",
+        "content": "export class CustomError extends Error {\n  public statusCode?: number;\n  public details?: string;\n\n  constructor(message: string, statusCode?: number, details?: string) {\n    super(message);\n    this.statusCode = statusCode;\n    this.details = details;\n  }\n}"
+      },
+      {
+        "path": "backend/src/dtos/base-dto.ts",
+        "content": "export interface DTO<T> {\n  toDTO(data: T): object;\n  fromDTO(dto: object): T;\n}\n"
+      },
+      {
+        "path": "backend/src/dtos/user-dto.ts",
+        "content": "import { DTO } from './base-dto';\nimport { User } from '../models/user';\n\nexport class UserDTO implements DTO<User> {\n  toDTO(user: User): object {\n    return {\n      id: user._id,\n      username: user.username,\n      email: user.email,\n      createdAt: user.createdAt\n    };\n  }\n\n  fromDTO(dto: object): User {\n    return {\n      _id: dto['id'],\n      username: dto['username'],\n      passwordHash: '',\n      email: dto['email'],\n      createdAt: dto['createdAt']\n    };\n  }\n}"
+      },
+      {
+        "path": "backend/src/utils/logger.ts",
+        "content": "import winston from 'winston';\n\nconst logger = winston.createLogger({\n  level: 'info',\n  format: winston.format.json(),\n  defaultMeta: { service: 'user-service' },\n  transports: [\n    new winston.transports.Console({\n      format: winston.format.combine(\n        winston.format.colorize(),\n        winston.format.simple()\n      )\n    })\n  ],\n});\n\nexport default logger;\n"
+      }
+    ],
+    "reasoning": "The code implements a global error handling middleware and standardizes DTOs for converting between API and DB models, meeting enterprise coding standards. \n\n1. **Separation of Concerns**: Error handling is centralized in middleware distinct from business logic.\n2. **Logger Integration**: Uses 'winston' for structured logging with request IDs.\n3. **Error Handling**: CustomError class for detailed error management and consistent JSON response.\n4. **DTOs**: Implements a base DTO interface with UserDTO, ensuring proper API-DB mapping.\n5. **No Direct Model Access**: Services will not access models directly; they will use DTOs and repositories.\n6. **Input Validation (Planned)**: Zod validators will be added for input checks.\n7. **Security (Planned)**: Incorporation of Helmet, CORS, and rate-limiting is planned.\n8. **Naming Consistency**: File and method naming follow `kebab-case` and `camelCase`.\n9. **Microservice-Friendly**: Structured logger and error handler ease transition to microservices.\n10. **Error Middleware**: Streams errors to a centralized handler for uniform processing.\n11. **Architecture Alignment**: Adheres to Controller-Service-Repository architecture with appropriate boundaries.\n12. **Config & Env (Planned)**: A centralized module for environment validation using zod is planned."
+  }
+}

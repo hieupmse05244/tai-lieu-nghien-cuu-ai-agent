@@ -11,11 +11,18 @@ Sử dụng workflow này để khởi tạo một thư mục dự án thử ngh
     - File nguồn: `05-Standards-Guidelines/Ignore-Files.standard.md` (Phần 2)
 4.  Tạo thư mục `docs/`.
 5.  Khởi tạo `README.md` cơ bản.
+6.  Thiết lập `agents/runner/`:
+    - Tạo thư mục: `mkdir -p agents/runner/logs`
+    - Sao chép nội dung chuẩn vào `.gitignore` cho runner.
+    - Sao chép nội dung chuẩn vào `.dockerignore` cho runner.
 
 // turbo
-6.  Chạy lệnh sau để tạo nhanh (thay `<PROJECT_NAME>`):
+7.  Chạy lệnh sau để tạo nhanh (thay `<PROJECT_NAME>`):
     ```bash
     mkdir -p 07-Experiments/<PROJECT_NAME>/docs
+    mkdir -p 07-Experiments/<PROJECT_NAME>/agents/runner/logs
     touch 07-Experiments/<PROJECT_NAME>/.gitignore
     touch 07-Experiments/<PROJECT_NAME>/.dockerignore
+    touch 07-Experiments/<PROJECT_NAME>/agents/runner/.gitignore
+    touch 07-Experiments/<PROJECT_NAME>/agents/runner/.dockerignore
     ```

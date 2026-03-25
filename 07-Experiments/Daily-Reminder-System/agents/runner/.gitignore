@@ -1,0 +1,9 @@
+# Sensitive config
+.env
+config.json
+api_key*
+
+# State and Logs
+state.json
+*.log
+logs/

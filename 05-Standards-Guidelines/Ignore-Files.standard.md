@@ -76,6 +76,31 @@ README.md
 
 # OS files
 .DS_Store
+
+## 3. Agent Runner Specifics
+
+Mục tiêu: Bảo vệ `api_key`, cấu hình nhạy cảm và tệp trạng thái (state) trong thư mục `agents/runner`.
+
+**Nội dung `.gitignore` cho `agents/runner`:**
+```text
+# Sensitive config
+.env
+config.json
+api_key*
+
+# State and Logs
+state.json
+*.log
+logs/
+```
+
+**Nội dung `.dockerignore` cho `agents/runner`:**
+```text
+.env
+api_key*
+state.json
+logs/
+```
 ```
 
 ---

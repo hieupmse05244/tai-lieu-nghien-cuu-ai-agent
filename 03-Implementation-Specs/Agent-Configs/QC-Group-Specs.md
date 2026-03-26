@@ -1,29 +1,29 @@
-# Đặc tả Nhóm QC Agent (QC Group Specs)
+# Đặc tả phối hợp: Nhóm QC Agent
 
-Dưới đây là đặc tả vai trò cho các Agent tham gia vào quá trình kiểm soát chất lượng.
+Tài liệu này quy định cách thức phối hợp giữa các tác nhân trong nhóm kiểm soát chất lượng (QC Group).
+
+## 1. Thành phần nhóm
+Nhóm QC bao gồm các vai trò chuyên biệt sau:
+
+1.  **Solution Architect (SAc) Agent**: Thiết kế kiến trúc hệ thống và hợp đồng kỹ thuật.
+2.  **Tech Lead Agent**: Kiểm duyệt việc thực thi kiến trúc và logic nghiệp vụ.
+3.  **QA/Tester Agent**: Xác thực chức năng và các kịch bản ngoại lệ.
+4.  **Security Agent**: Kiểm soát các rủi ro bảo mật và rò rỉ dữ liệu.
+
+## 2. Quy tắc phối hợp
+
+### 2.1. Mô hình đồng thuận
+- Các thay đổi mã nguồn yêu cầu sự đồng ý từ các thành viên có liên quan trước khi được chấp nhận.
+- **Quyền phủ quyết**: Tech Lead và Security Agent có quyền từ chối nếu phát hiện các vi phạm nghiêm trọng về kiến trúc hoặc bảo mật.
+
+### 2.2. Quy trình kiểm duyệt
+1. **Tiếp nhận**: Nhóm QC nhận thông báo về thay đổi mã nguồn.
+2. **Phân tích song song**:
+    - Tác nhân QA/Tester thực hiện các kịch bản xác thực chức năng.
+    - Tác nhân Security rà soát các lỗ hổng tiềm tàng.
+    - Tác nhân Tech Lead đối soát cấu trúc và logic tổng thể.
+3. **Tổng hợp**: Tech Lead thu thập các phản hồi và đưa ra kết luận cuối cùng cho phía thực thi.
 
 ---
-
-## 1. Tech Lead Agent (Evaluator)
-- **Mục tiêu**: Đảm bảo mã nguồn đúng kiến trúc và logic nghiệp vụ.
-- **Dữ liệu đọc**: `Contract.md`, `PRD.md`, `Coder_Message`.
-- **Quyền hạn**: Chấp nhận hoặc Từ chối ghi file.
-- **Công cụ**: LLM-based Logic Analysis.
-
-## 2. QA/Tester Agent (Functionality)
-- **Mục tiêu**: Tìm lỗi (bug) và các trường hợp biên (edge cases).
-- **Dữ liệu đọc**: `PRD.md`, `User-Flow.md`, `Source_Code`.
-- **Quyền hạn**: Yêu cầu bổ sung Unit Test.
-- **Công cụ**: Test-case generation, Mocking logic.
-
-## 3. Security Agent (SecOps)
-- **Mục tiêu**: Phát hiện lỗ hổng bảo mật.
-- **Tiêu chuẩn**: OWASP Top 10, CWE.
-- **Kiểm tra**: SQL Injection, XSS, Broken Auth, Hardcoded Secrets.
-
----
-
-## Quy tắc Phối hợp (Interaction Rules)
-
-- **QC Group** hoạt động theo mô hình **Đồng thuận (Consensus)**: Chỉ khi Tech Lead gật đầu VÀ không có cảnh báo đỏ từ Security thì code mới được Merge.
-- Phản hồi của QC Group phải rõ ràng, mang tính xây dựng và có chỉ dẫn sửa lỗi cụ thể cho Coder.
+> [!NOTE]
+> Nhóm QC hoạt động như một hệ thống lọc đa tầng nhằm phát hiện lỗi tại các giai đoạn sớm của chu trình phát triển.

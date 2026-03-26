@@ -1,6 +1,4 @@
-# Hướng dẫn Triển khai dành cho AI Agent (Agent Implementation Guide)
-
-Tài liệu này là chỉ lệnh chính thức do Lập trình viên (Developer) cung cấp cho AI Agent. Các Agent tham gia vào dự án **Agent Factory** BẮT BUỘC phải đọc và tuân thủ các quy tắc dưới đây khi thực hiện triển khai mã nguồn.
+Tài liệu này là chỉ lệnh chính thức do lập trình viên cung cấp cho tác nhân trí tuệ nhân tạo. Các tác nhân tham gia vào dự án Agent Factory yêu cầu phải đọc và tuân thủ các quy tắc dưới đây khi thực hiện triển khai mã nguồn.
 
 ## 1. Vai trò và Phạm vi (Role & Scope)
 
@@ -11,15 +9,15 @@ Tài liệu này là chỉ lệnh chính thức do Lập trình viên (Developer
 
 Để tối ưu hóa sự hiểu biết, Agent phải tuân thủ thứ tự đọc tài liệu sau:
 
-1.  **Cấp độ 1 (Global Standards)**: Luôn đọc các tiêu chuẩn tại `05-Standards-Guidelines/` đầu tiên. Đây là "Luật pháp" bất biến của toàn hệ thống (Coding style, Folder structure).
-2.  **Cấp độ 2 (Project Design Anchors)**: Đọc `Contract.md` và `PRD.md` tại thư mục `/docs` của dự án để nắm bối cảnh và các cam kết kỹ thuật.
-3.  **Cấp độ 3 (Task Instructions)**: Cuối cùng, thực thi theo các bước atomic trong `Agent-Instructions.md`.
+1.  **Cấp độ 1 (Tiêu chuẩn hệ thống)**: Tham chiếu các tiêu chuẩn tại `05-Standards-Guidelines/`. Đây là quy định bắt buộc của toàn hệ thống (phong cách lập trình, cấu trúc thư mục).
+2.  **Cấp độ 2 (Đặc tả dự án)**: Tham chiếu `Contract.md` và `PRD.md` tại thư mục `/docs` của dự án để nắm bối cảnh và các cam kết kỹ thuật.
+3.  **Cấp độ 3 (Hướng dẫn tác vụ)**: Thực thi theo các bước được chia nhỏ trong `Agent-Instructions.md`.
 
 ## 2. Quy tắc Vận hành Cốt lõi (Core Execution Rules)
 
-1.  **Kiến trúc là tối thượng**: Trước khi thực hiện bất kỳ thay đổi nào về logic, Agent phải đọc các tệp đặc tả tại `/02-Architecture`. Mọi sự sai lệch so với Whitepaper phải được báo cáo và xin ý kiến của Control Plane (nhân sự giám sát).
-2.  **Hệ thống Cấu hình (Config-driven)**: Không mã hóa cứng (hardcode) các thông số. Toàn bộ hành vi phải được định nghĩa qua tệp cấu hình trong `/03-Implementation-Specs/Agent-Configs/`.
-3.  **Trạng thái liên tục (State Logging)**: Agent phải cập nhật tệp `state.json` và `meta.json` sau mỗi Iteration để đảm bảo tính nhất quán (tránh State Desync).
+1.  **Tính nhất quán của kiến trúc**: Trước khi thực hiện thay đổi về logic, tác nhân phải tham chiếu các tệp đặc tả tại `/02-Architecture`. Mọi sai lệch cần được báo cáo cho Control Plane.
+2.  **Cấu trúc dựa trên cấu hình (Config-driven)**: Không sử dụng các giá trị cố định (hardcode). Toàn bộ hành vi phải được định nghĩa qua các tệp cấu hình trong `/03-Implementation-Specs/Agent-Configs/`.
+3.  **Duy trì trạng thái (State Logging)**: Tác nhân cập nhật tệp `state.json` và `meta.json` sau mỗi chu kỳ để đảm bảo tính đồng bộ dữ liệu.
 
 ## 3. Tiêu chuẩn Mã nguồn & Chất lượng (Code Quality Standards)
 
@@ -56,4 +54,4 @@ Hệ thống vận hành theo chu kỳ khép kín để đảm bảo tính chín
 
 ---
 > [!IMPORTANT]
-> **Identity Check**: Bạn là một thành viên của dự án Agent Factory. Hãy hành động một cách chuyên nghiệp, cẩn trọng và hướng tới sự tiến hóa của toàn bộ hệ thống.
+> Tác nhân là một thành phần của dự án Agent Factory, cần hành động chuyên nghiệp, cẩn trọng và hướng tới sự ổn định của hệ thống.

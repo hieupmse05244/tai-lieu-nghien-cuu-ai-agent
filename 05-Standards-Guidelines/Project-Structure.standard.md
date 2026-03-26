@@ -1,45 +1,43 @@
-# Tiêu chuẩn Cấu trúc Thư mục Dự án: Standard-Workspace (v1.1)
+# Tiêu chuẩn cấu trúc thư mục (Project Structure Standard)
 
-Mọi dự án con (Experiment) trong hệ sinh thái Agent Factory phải tuân thủ cấu trúc thư mục chuẩn dưới đây.
+Quy định cấu trúc thư mục chuẩn cho các dự án thực nghiệm trong hệ sinh thái Agent Factory. Việc tuân thủ cấu trúc này là bắt buộc để các tác nhân điều phối có thể hoạt động hiệu quả.
 
-## 1. Sơ đồ cấu trúc (Directory Tree)
+## 1. Cấu trúc thư mục gốc (Root Structure)
+
+Mỗi dự án thực nghiệm cần tuân theo sơ đồ sau:
 
 ```text
-project-root/
-├── docs/               # Chứa toàn bộ hồ sơ thiết kế và đặc tả
-├── agents/             # Chứa các AI Agent vận hành dự án
-│   └── runner/         # Bộ thực thi thông minh
-├── backend/            # Mã nguồn Backend (Module-based)
-│   ├── src/
-│   │   ├── modules/    # Chứa các Module nghiệp vụ (v3.0)
-│   │   ├── config/
-│   │   └── middlewares/
-├── frontend/           # Mã nguồn Frontend (Vite/React)
-└── package.json        
+/
+├── docs/                 # Đặc tả thiết kế và yêu cầu
+│   ├── PRD.spec.md       # Yêu cầu sản phẩm
+│   ├── Contract.spec.md  # Hợp đồng giao diện (API/DB)
+│   └── User-Flow.spec.md # Luồng người dùng
+├── backend/              # Mã nguồn phía máy chủ
+├── frontend/             # Mã nguồn phía máy khách
+├── agents/               # Cấu hình và tệp hỗ trợ tác nhân
+│   └── runner/           # Công cụ điều phối thực thi nhiệm vụ
+├── tests/                # Bộ kiểm thử tích hợp và hệ thống
+└── .gitignore            # Quy định loại trừ tệp tin
 ```
 
-## 2. Document Naming Convention (Quy ước mới v1.1)
+## 2. Quy định chi tiết các thành phần
 
-Để Agent nhận diện vai trò tài liệu chính xác, mọi tệp tin trong `/docs` và `05-Standards-Guidelines` phải sử dụng hậu tố:
+### 2.1. Thư mục Tài liệu (docs/)
+- Lưu trữ các tệp mỏ neo cho quá trình phát triển.
+- Các tệp tin trong thư mục này được coi là nguồn dữ liệu chuẩn cho các tác nhân.
 
-1.  **`*.standard.md`**: Global Standards (Luật chung dự án).
-    - Ví dụ: `Coding.standard.md`, `Security.standard.md`.
-2.  **`*.spec.md`**: Implementation Specifications (Đặc tả thiết kế chi tiết).
-    - Ví dụ: `PRD.spec.md`, `Contract.spec.md`.
-3.  **`*.rule.md`**: Atomic Rules (Ràng buộc nhỏ, cụ thể).
-    - Ví dụ: `Naming.rule.md`.
-4.  **`*.log.md`**: Traceability & Evidence (Nhật ký thực thi & Lập lịch).
-    - Ví dụ: `Planner.log.md`, `Transaction.log.md`.
-5.  **`*.guide.md`**: Onboarding & Procedure (Hướng dẫn luồng).
-    - Ví dụ: `Implementation.guide.md`.
+### 2.2. Thư mục Mã nguồn (backend/ & frontend/)
+- Phải đảm bảo sự phân tách rõ ràng giữa các lớp xử lý (modules).
+- Các tệp cấu hình môi trường phải được bảo mật và không đưa vào kho lưu trữ chung.
 
-## 3. Phân loại Hồ sơ (Classification)
+### 2.3. Thư mục Tác nhân (agents/)
+- Chứa các chỉ thị thực thi chuyên biệt dành riêng cho từng dự án.
+- Bao gồm các định nghĩa về logic vận hành của các công cụ điều phối (runner).
 
-| Nhóm | Hậu tố | Vị trí | Bản chất |
-| :--- | :--- | :--- | :--- |
-| **Hồ sơ Công việc** | `.spec`, `.log` | `/docs` dự án | **Cái gì (What)**: Yêu cầu cụ thể. |
-| **Hồ sơ Tiêu chuẩn** | `.standard`, `.rule` | `05-Standards-Guidelines/` | **Thế nào (How)**: Rào cản chất lượng. |
+## 3. Quản lý phiên bản và quy trình hợp nhất
+- Sử dụng quy trình rẽ nhánh theo tính năng (feature/name).
+- Hợp nhất mã nguồn chỉ được thực hiện sau khi vượt qua các bước kiểm soát chất lượng từ nhóm QC.
 
 ---
-> [!IMPORTANT]
-> Agent phải đọc các tệp `.standard` đầu tiên để hiểu quy định, sau đó đọc các tệp `.spec` và `.log` để thực thi nhiệm vụ.
+> [!TIP]
+> Một cấu trúc thư mục rõ ràng là yếu tố tiên quyết để các tác nhân tự động có thể hiểu và thao tác chính xác trên mã nguồn.

@@ -1,39 +1,39 @@
-# Đặc tả triển khai: Agent Schema Definition (Định nghĩa Agent)
+# Đặc tả hệ thống: Định nghĩa cấu trúc tác nhân (Agent Schema)
 
-Trong Agent Factory, các Agent không được mã hóa cứng (hardcoded) mà được định nghĩa thông qua các tệp cấu hình (YAML/JSON). Tài liệu này định nghĩa cấu trúc chuẩn (Schema) để tạo mới hoặc điều chỉnh một Agent.
+Trong hệ thống Agent Factory, các tác nhân được định nghĩa thông qua các tệp cấu hình có cấu trúc. Tài liệu này mô tả cấu trúc chuẩn (Schema) để khởi tạo hoặc điều chỉnh các thành phần của một tác nhân.
 
-## 1. Cấu trúc Schema Tổng quát
+## 1. Cấu trúc Schema tổng quát
 
-Mỗi Agent phải có đầy đủ 5 nhóm thuộc tính sau:
+Mỗi tác nhân bao gồm 5 nhóm thuộc tính cơ bản sau:
 
-### 1.1. Identity (Định danh & Persona)
-- `id`: Định danh duy nhất (Slug).
-- `role`: Vai trò chính (ví dụ: Senior Backend Engineer).
-- `persona`: Tính cách và phong cách làm việc (Pragmatic, detail-oriented, v.v.).
+### 1.1. Định danh và phong cách (Identity & Persona)
+- `id`: Định danh duy nhất của tác nhân.
+- `role`: Vai trò chuyên môn xác định.
+- `persona`: Đặc điểm phong cách làm việc (ví dụ: thực dụng, chú trọng chi tiết).
 
-### 1.2. Capabilities & Tools (Năng lực & Công cụ)
-- `capabilities`: Danh sách các kỹ năng (Skills) của Agent (ví dụ: api_design, testing).
-- `tools`: Danh sách các công cụ mà Agent được phép truy cập (ví dụ: code_generator, file_system_v2).
+### 1.2. Năng lực và công cụ (Capabilities & Tools)
+- `capabilities`: Danh sách các kỹ năng chuyên môn được gán cho tác nhân.
+- `tools`: Các công cụ kỹ thuật mà tác nhân được quyền truy cập và sử dụng.
 
-### 1.3. Constraints & Rules (Ràng buộc & Quy tắc)
-- `rules`: Các nguyên tắc bắt buộc phải tuân thủ (ví dụ: Clean Architecture, Unit test required).
-- `guidelines`: Các gợi ý hoặc phong cách ưu tiên (ví dụ: Use camelCase).
+### 1.3. Ràng buộc và quy tắc (Constraints & Rules)
+- `rules`: Các nguyên tắc bắt buộc phải tuân thủ trong quá trình thực thi.
+- `guidelines`: Các gợi ý về phong cách hoặc quy chuẩn ưu tiên.
 
-### 1.4. Memory & Scope (Bộ nhớ & Phạm vi)
-- `memory_access`: Các tầng bộ nhớ mà Agent có thể đọc/ghi (Working, Episodic, Semantic).
-- `workspace_scope`: Thư mục hoặc file mà Agent có quyền chỉnh sửa.
+### 1.4. Bộ nhớ và phạm vi (Memory & Scope)
+- `memory_access`: Các lớp bộ nhớ mà tác nhân có quyền tương tác (Working, Episodic, Semantic).
+- `workspace_scope`: Phạm vi thư mục hoặc tệp tin mà tác nhân được phép thao tác.
 
-### 1.5. Evaluation (Đánh giá)
-- `metrics`: Các chỉ số KPI mà Agent sẽ bịEvaluator chấm điểm.
+### 1.5. Chỉ số đánh giá (Evaluation)
+- `metrics`: Các tiêu chí định lượng dùng để đo lường hiệu quả hoạt động của tác nhân.
 
-## 2. Ví dụ tệp Cấu hình (agent_spec.yaml)
+## 2. Ví dụ cấu hình tham khảo (agent_spec.yaml)
 
 ```yaml
 id: drs-backend-coder
-role: Backend Implementation Agent
+role: tác nhân thực thi backend
 persona: 
-  tone: precise, strict
-  experience: Expert in Node.js
+  tone: chính xác, chặt chẽ
+  experience: chuyên gia lập trình nền tảng node.js
 capabilities:
   - api_implementation
   - database_migration
@@ -46,16 +46,17 @@ rules:
   - must_write_unit_tests
   - strictly_follow_contract_07
 workspace_scope:
-  - 07-Experiments/Daily-Reminder-System/backend/
+  - 07-experiments/daily-reminder-system/backend/
 evaluation:
   metrics: [functional_correctness, code_quality, contract_compliance]
 ```
 
-## 3. Quy trình Tự tiến hóa Cấu hình (Config Mutation)
+## 3. Cơ chế điều chỉnh cấu hình
 
-Control Plane có thể yêu cầu **Evolution Agent** tự động chỉnh sửa `agent_spec.yaml` (Mutation) nếu điểm số Evaluator bền bỉ ở mức thấp.
-- Ví dụ: Thêm `rule: avoid_recursive_logic` vào `rules` nếu phát hiện Agent hay viết code gây Infinite Loop.
+Hệ thống có thể thực hiện điều chỉnh cấu hình của tác nhân (mutation) dựa trên dữ liệu phân tích từ quá trình thực thi:
+- Việc bổ sung các quy tắc mới có thể được thực hiện nếu phát hiện các mẫu lỗi lặp lại trong lịch sử hoạt động.
+- Mọi thay đổi về định nghĩa tác nhân cần được lưu vết phiên bản để đảm bảo khả năng truy xuất nguồn gốc.
 
 ---
 > [!IMPORTANT]
-> **Immutability Notice**: Các tệp định nghĩa Agent trong thư mục `03-Implementation-Specs/Agent-Configs/` là mỏ neo vận hành. Bất kỳ sự thay đổi tự động nào của AI cũng phải được ghi lại lịch sử phiên bản (Versioning).
+> Các tệp định nghĩa tác nhân là cơ sở vận hành quan trọng của hệ thống. Việc thay đổi cấu hình cần được thực hiện dựa trên dữ liệu thực tế và có sự giám sát.

@@ -1,6 +1,6 @@
 # Contract Giao tiếp: Daily Reminder System (DRS) v3.3
 
-Tài liệu này tập trung vào **Schema** và **API Logic**. Các tiêu chuẩn an ninh hạ tầng áp dụng theo `Coding.standard.md v3.1`.
+Tài liệu này tập trung vào **Schema** và **API Logic**. Các tiêu chuẩn an ninh hạ tầng áp dụng theo `Backend.standard.md v3.1`.
 
 ## 1. Data Schema
 

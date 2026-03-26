@@ -1,112 +1,104 @@
-# [AGENT-READY] Chỉ thị Triển khai Dự án (Project Implementation Instructions)
+# Chỉ thị triển khai dự án (Agent Ready)
 
-**Lập trình viên:** [Tên Agent / Dev]  
-**Dự án:** [Tên dự án/Tính năng]  
-**Ngày:** [Ngày ban hành]  
-
----
-
-## 1. Bối cảnh & Mục tiêu (Context & Goals)
-
-- [ ] **Mô tả:** [Ngắn gọn, rõ ràng về tính năng/dự án]  
-- [ ] **Tài liệu tham khảo (PRD / Architecture Docs):** [Link]  
-- [ ] **Mục tiêu ưu tiên:** [Hiệu năng / Bảo mật / Time-to-market]  
-- [ ] **Người kiểm duyệt (Control Plane):** [Tên người/Agent kiểm duyệt trước commit]  
+**Tên tác nhân**: [Tên tác nhân / Lập trình viên]  
+**Dự án**: [Tên dự án / Tính năng]  
+**Ngày ban hành**: [Ngày ban hành]  
 
 ---
 
-## 2. Đặc tả Kỹ thuật (Technical Specs)
+## 1. Bối cảnh và mục tiêu
 
-- [ ] **Ngôn ngữ & Framework:**  
+- [ ] **Mô tả**: [Mô tả ngắn gọn về tính năng hoặc dự án]  
+- [ ] **Tài liệu tham chiếu**: [Đường dẫn đến PRD hoặc Architecture Docs]  
+- [ ] **Mục tiêu ưu tiên**: [Hiệu năng / Bảo mật / Thời gian hoàn thành]  
+- [ ] **Kiểm soát viên (Control Plane)**: [Tác nhân kiểm duyệt trước khi xác nhận thay đổi]  
+
+---
+
+## 2. Đặc tả kỹ thuật
+
+- [ ] **Môi trường thực thi**:  
   - Backend: Node.js v20 + Express 5.x  
   - Frontend: React 20.x + Vite  
 
-- [ ] **Cấu trúc Thư mục được phép sửa:**  
+- [ ] **Cấu trúc thư mục được phép chỉnh sửa**:  
 ```text
 backend/
 src/
-routes/ # [tạo/sửa route files]
-controllers/ # [tạo/sửa controller files]
-services/ # [tạo/sửa service files]
+routes/ # [tạo hoặc chỉnh sửa tệp route]
+controllers/ # [tạo hoặc chỉnh sửa tệp controller]
+services/ # [tạo hoặc chỉnh sửa tệp service]
 frontend/
 src/
-components/ # [tạo/sửa component files]
-hooks/ # [tạo/sửa hooks]
+components/ # [tạo hoặc chỉnh sửa tệp component]
+hooks/ # [tạo hoặc chỉnh sửa mã nguồn hooks]
 ```
-> **Không được chạm vào file config core, node_modules hoặc assets gốc.**  
+> Ghi chú: Không thay đổi các tệp cấu hình cốt lõi, thư mục phụ thuộc hoặc tài nguyên gốc.
 
-- [ ] **Dependencies mới (có version cụ thể):**  
-- Example: `multer@1.4.5`, `cloudinary@2.20.0`, `dotenv@16.1.0`  
+- [ ] **Các phụ thuộc mới (yêu cầu phiên bản cụ thể)**:  
+- Ví dụ: `multer@1.4.5`, `dotenv@16.1.0`  
 
-- [ ] **Cơ sở dữ liệu / Migration:** [Schema cần tạo/sửa, migration path]  
+- [ ] **Cơ sở dữ liệu và chuyển đổi (Migration)**: [Mô tả schema cần tạo hoặc chỉnh sửa]  
 
-- [ ] **Input/Output chuẩn (API):**  
-- Nhận: `{ file: File }`  
-- Trả về: `{ success: boolean, url?: string, error?: string }`  
-
----
-
-## 3. Quy tắc & Tiêu chuẩn cho Agent (Agent Constraints)
-
-- [ ] **Coding Standard:** Tuân thủ `05-Standards-Guidelines/Coding-Standards.md`  
-- [ ] **Naming Convention:** camelCase cho biến, PascalCase cho class/component  
-- [ ] **Pattern yêu cầu:**  
-- Service layer handle business logic  
-- Controller chỉ handle request/response  
-- Factory/Singleton/Repository nếu cần  
-
-- [ ] **Validation bắt buộc:**  
-- File size < 5MB  
-- File type: jpg/png  
-- Trả JSON error chuẩn nếu validation fail  
-
-- [ ] **Error Handling:** luôn trả status code + message rõ ràng  
-
-- [ ] **Test:**  
-- Unit test cho controller & service  
-- Coverage ≥ 80%  
-- Linter pass 100%  
+- [ ] **Giao diện lập trình (API Input/Output)**:  
+- Đầu vào: `{ file: File }`  
+- Đầu ra: `{ success: boolean, url?: string, error?: string }`  
 
 ---
 
-## 4. Quy trình Thực hiện (Step-by-Step Workflow)
+## 3. Quy tắc và ràng buộc đối với tác nhân
 
-1.  [ ] Checkout branch feature: `git checkout -b feature/<tên-tính-năng>`  
-2.  [ ] Cài đặt dependencies với version chỉ định (`npm install`)  
-3.  [ ] Tạo service/controller theo folder structure  
-4.  [ ] Implement API với IO chuẩn + validation + error handling  
-5.  [ ] Viết unit test, đảm bảo coverage ≥ 80%  
-6.  [ ] Chạy linter và test trước commit  
-7.  [ ] Commit code chuẩn:  
-  ```
-  git add .
-  git commit -m "[FEAT] <tóm tắt feature>"
-  git push origin feature/<tên-tính-năng>
-  ```  
-8.  [ ] Tạo PR & đợi Control Plane review  
-9.  [ ] Merge PR chỉ khi tất cả test & linter pass  
+- [ ] **Tiêu chuẩn lập trình**: Tuân thủ các quy định tại mục tiêu chuẩn lập trình backend/frontend.
+- [ ] **Quy ước đặt tên**: Sử dụng camelCase cho biến, PascalCase cho lớp hoặc thành phần.
+- [ ] **Mô hình lập trình**:  
+- Service layer xử lý logic nghiệp vụ.
+- Controller thực hiện điều phối yêu cầu và phản hồi.
+- Áp dụng các mẫu thiết kế phù hợp nếu cần thiết.
 
----
+- [ ] **Quy tắc xác thực**:  
+- Kích thước tệp tin dưới 5MB.
+- Định dạng tệp tin cho phép: jpg, png.
+- Trả về thông báo lỗi dạng JSON nếu xác thực thất bại.
 
-## 5. Tiêu chí Nghiệm thu (Acceptance Criteria)
+- [ ] **Xử lý lỗi**: Đảm bảo trả về mã trạng thái và thông báo lỗi rõ ràng.
 
-- [ ] API/feature hoạt động đúng IO chuẩn  
-- [ ] Validation & error handling đúng yêu cầu  
-- [ ] Unit test coverage ≥ 80%  
-- [ ] Linter pass, tuân thủ coding standard  
-- [ ] Chỉ upload/modify file được phép  
-- [ ] Merge PR sau review thành công  
+- [ ] **Kiểm thử**:  
+- Thực hiện kiểm thử đơn vị cho controller và service.
+- Độ bao phủ mã nguồn (coverage) đạt tối thiểu 80%.
+- Vượt qua các bước kiểm tra cú pháp (linter).
 
 ---
 
-## 6. Ghi chú đặc biệt (Special Notes)
+## 4. Quy trình thực hiện từng bước
 
-- [ ] Không commit secrets hoặc file ảnh thực tế  
-- [ ] Kiểm tra `.env` / config trước commit  
-- [ ] Không sửa các core config hoặc file ngoài folder cho phép  
-- [ ] Nếu có chỗ chưa rõ, **dừng lại & hỏi Control Plane**  
+1.  [ ] Nhận nhánh tính năng mới: `git checkout -b feature/<ten-tinh-nang>`  
+2.  [ ] Cài đặt các phụ thuộc theo phiên bản chỉ định.
+3.  [ ] Xây dựng cấu trúc service/controller theo đúng quy định.
+4.  [ ] Triển khai giao diện lập trình kèm theo các bước xác thực và xử lý lỗi.
+5.  [ ] Thực hiện kiểm thử đơn vị, đảm bảo độ bao phủ mã nguồn.
+6.  [ ] Chạy linter và kiểm thử tổng thể trước khi xác nhận thay đổi.
+7.  [ ] Xác nhận thay đổi mã nguồn với thông điệp chuẩn.
+8.  [ ] Khởi tạo yêu cầu hợp nhất (PR) và đợi phản hồi từ Control Plane.
+9.  [ ] Chỉ thực hiện hợp nhất khi các điều kiện kiểm thử đã đạt yêu cầu.
 
 ---
 
-> [!TIP]  
-> **Hướng dẫn cho Agent:** Đọc kỹ template trước khi `git add`. Tuân thủ folder, validation, test, commit & PR workflow. Nếu input/output chưa rõ hoặc rule nào chưa nắm, hỏi Control Plane trước khi code tiếp.
+## 5. Tiêu chí nghiệm thu
+
+- [ ] Tính năng hoạt động đúng theo đặc tả giao diện lập trình.
+- [ ] Quy trình xác thực và xử lý lỗi được triển khai đầy đủ.
+- [ ] Độ bao phủ kiểm thử đạt mục tiêu đề ra.
+- [ ] Mã nguồn tuân thủ các quy định về phong cách lập trình.
+- [ ] Chỉ thay đổi các tệp tin trong phạm vi được phép.
+
+---
+
+## 6. Ghi chú bổ sung
+
+- [ ] Tuyệt đối không lưu trữ các khóa bảo mật hoặc tệp tin thực tế trong mã nguồn.
+- [ ] Kiểm tra kỹ tệp cấu hình môi trường trước khi xác nhận thay đổi.
+- [ ] Trường hợp có nội dung chưa rõ ràng, cần dừng lại và yêu cầu làm rõ từ Control Plane.
+
+---
+> [!TIP]
+> Tác nhân cần rà soát kỹ các yêu cầu về xác thực, kiểm thử và quy trình hợp nhất mã nguồn trước khi bắt đầu thực thi.

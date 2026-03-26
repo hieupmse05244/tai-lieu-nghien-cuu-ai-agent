@@ -134,7 +134,7 @@ async function main() {
         const instructions = fs.readFileSync(INSTRUCTIONS_FILE, 'utf8');
         const contract = readDoc(CONTRACT_FILE);
         const prd = readDoc(PRD_FILE);
-        const codingStandardPath = path.join(STANDARDS_DIR, 'Coding.standard.md');
+        const codingStandardPath = path.join(STANDARDS_DIR, 'Backend.standard.md');
         const codingStandard = readDoc(codingStandardPath);
         const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
 

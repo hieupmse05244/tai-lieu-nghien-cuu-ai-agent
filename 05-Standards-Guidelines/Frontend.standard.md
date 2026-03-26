@@ -1,31 +1,27 @@
-# Frontend Development Standard (DRS v3.7)
+# Tiêu chuẩn lập trình Frontend
 
-Bộ quy chuẩn này áp dụng cho mọi Agent và Developer khi làm việc với tầng Giao diện của Daily Reminder System.
+Tài liệu này quy định các chuẩn mực kỹ thuật và quy trình triển khai cho thành phần Frontend trong hệ sinh thái Agent Factory.
 
-## 1. Stack Kỹ thuật
-- **Framework**: React 18+ (Vite).
-- **Styling**: Tailwind CSS (v3/v4).
-- **Icons**: Lucide React.
-- **State Management**: Zustand (Global) / React Query (Server state).
-- **API Client**: Axios.
+## 1. Nền tảng công nghệ
+- **Framework**: React với ngôn ngữ TypeScript.
+- **Công cụ xây dựng**: Vite (phiên bản ổn định).
+- **Quản lý trạng thái**: Ưu tiên sử dụng React Context hoặc các thư viện quản lý trạng thái phù hợp theo quy mô tác vụ.
 
-## 2. Quy chuẩn Code (Coding Standards)
-- **Component**: Ưu tiên Functional Components và Hooks.
-- **Atomic Design**: 
-  - `atoms`: Các thẻ cơ bản (Button, Input).
-  - `molecules`: Nhóm các thẻ (FormField, NavItem).
-  - `organisms`: Các khối chức năng (Sidebar, Table).
-  - `pages`: Giao diện hoàn chỉnh.
-- **Naming**: PascalCase cho Component, camelCase cho Props/Variables.
+## 2. Cấu trúc thư mục Frontend
+Thư mục `frontend/src/` yêu cầu cấu trúc như sau:
+- `components/`: Các thành phần giao diện nhỏ lẻ, có khả năng tái sử dụng.
+- `pages/`: Các thành phần đại diện cho từng trang ứng dụng.
+- `services/`: Các lớp xử lý giao tiếp dữ liệu với API.
+- `hooks/`: Các logic xử lý trạng thái tùy chỉnh.
+- `utils/`: Các hàm tiện ích dùng chung.
+- `types/`: Các định nghĩa kiểu dữ liệu.
 
-## 3. Quy chuẩn UI/UX
-- **Design System**: Sử dụng bảng màu `slate-950` là nền, `blue-600` là màu nhấn.
-- **Responsive**: Phải hiển thị tốt trên Mobile (sm), Tablet (md), và Desktop (lg).
-- **Interactions**: Sử dụng `transition-all`, `active:scale-95`, `backdrop-blur` cho các tương tác chạm/hover.
-
-## 4. Kiểm thử & Đảm bảo chất lượng (QA)
-- **Visual Testing**: Sử dụng Playwright để chụp ảnh màn hình và so sánh.
-- **Linting**: Tuân thủ ESLint và Prettier (đặc biệt là Tailwind class ordering).
+## 3. Quy chuẩn thực thi dành cho tác nhân
+- **Phong cách lập trình**: Sử dụng functional components và hooks.
+- **Tính phản hồi (Responsive)**: Giao diện phải tương thích với nhiều kích thước màn hình phổ biến.
+- **Xác thực dữ liệu**: Thực hiện kiểm tra tính hợp lệ của dữ liệu đầu vào ngay tại giao diện người dùng.
+- **Xử lý trạng thái tải (Loading/Error)**: Luôn khởi tạo các trạng thái thông báo cho người dùng khi đang chờ phản hồi từ hệ thống.
 
 ---
-**Duy trì tính nhất quán là chìa khóa của sự chuyên nghiệp.**
+> [!IMPORTANT]
+> Giao diện người dùng cần đạt được tính trực quan, nhất quán về phong cách và đảm bảo hiệu năng truy cập tối ưu.

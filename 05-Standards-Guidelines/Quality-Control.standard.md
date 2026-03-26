@@ -1,40 +1,34 @@
-# Tiêu chuẩn Kiểm soát Chất lượng (Quality Control Standard)
+# Tiêu chuẩn kiểm soát chất lượng (Quality Control Standard)
 
-Tài liệu này định nghĩa các quy tắc và quy trình đánh giá mã nguồn do các Agent thực hiện trong hệ thống Agent Factory.
+Tài liệu này định nghĩa các quy tắc và quy trình đánh giá mã nguồn trong hệ thống Agent Factory.
 
----
+## 1. Hệ thống đánh giá (Scoring Matrix)
 
-## 1. Hệ thống Chấm điểm (Scoring Matrix)
-
-Mọi mã nguồn sinh ra phải được đánh giá dựa trên thang điểm 10. Điểm tối thiểu để được phê duyệt (`Passed`) là **8/10**.
+Mã nguồn thực thi được đánh giá dựa trên thang điểm 10. Mức điểm tối thiểu để được chấp nhận là 8/10.
 
 | Tiêu chí | Trọng số | Mô tả |
 | :--- | :--- | :--- |
-| **Tính đúng đắn (Correctness)** | 40% | Code giải quyết đúng yêu cầu trong PRD và logic trong Task. |
-| **Tuân thủ Thiết kế (Contract Compliance)** | 30% | Đúng Schema, đúng API Endpoints, đúng kiểu dữ liệu đã định nghĩa. |
-| **Chất lượng mã (Code Quality)** | 20% | Clean code, dễ đọc, không có code thừa, đặt tên đúng chuẩn. |
-| **Bảo mật & Hiệu năng (Security & Perf)** | 10% | Không lộ secret, xử lý lỗi tốt, không gây treo hệ thống. |
+| **Tính đúng đắn (Correctness)** | 40% | Giải quyết đúng yêu cầu và logic của tác vụ. |
+| **Tuân thủ thiết kế (Contract Compliance)** | 30% | Đúng cấu trúc dữ liệu, các điểm cuối API và kiểu dữ liệu đã thiết lập. |
+| **Chất lượng mã nguồn (Code Quality)** | 20% | Mã nguồn sạch, dễ hiểu và tuân thủ quy ước đặt tên. |
+| **Bảo mật và hiệu năng (Security & Perf)** | 10% | Không lộ thông tin nhạy cảm và xử lý lỗi hiệu quả. |
 
----
+## 2. Quy trình kiểm soát chất lượng
 
-## 2. Quy trình QC (QC Workflow)
+1.  **Giai đoạn 1: Kiểm tra sơ bộ (Tác nhân review)**:
+    - Đối soát mã nguồn với hợp đồng kỹ thuật (Contract).
+    - Đưa ra điểm số dự kiến và nhận xét chi tiết.
+2.  **Giai đoạn 2: Kiểm tra kỹ thuật**:
+    - Thực hiện kiểm tra cú pháp và định dạng mã nguồn.
+    - Thực hiện kiểm thử đơn vị để xác nhận logic trong thực tế.
+3.  **Giai đoạn 3: Điều chỉnh tự động**:
+    - Trường hợp kết quả đánh giá không đạt yêu cầu, dữ liệu sẽ được phản hồi lại cho phía thực thi để điều chỉnh (giới hạn số lần thử lại).
 
-1.  **Giai đoạn 1: Soft Check (AI Review)**:
-    - Tech Lead Agent đọc code và so sánh với `Contract.md`.
-    - Đưa ra điểm số và nhận xét chi tiết.
-2.  **Giai đoạn 2: Hard Check (Technical Check)**:
-    - Chạy Linter để kiểm tra cú pháp.
-    - Chạy Unit Test để xác nhận logic thực tế.
-3.  **Giai đoạn 3: Self-Healing**:
-    - Nếu điểm < 8 hoặc Test fail, thông tin được gửi ngược lại cho Coder Agent để sửa lỗi (tối đa 3 lần).
+## 3. Các rào cản kỹ thuật
 
----
-
-## 3. Rào cản Kỹ thuật (Gatekeepers)
-
-- **Không được phép**: Hardcode API Key, sử dụng hàm `eval()`, bỏ qua lỗi (empty catch), đặt tên biến mơ hồ (`a`, `b`, `c`).
-- **Bắt buộc**: Phải có xử lý lỗi `try-catch`, phải có log quan trọng, phải sử dụng đúng định dạng thời gian (UTC+7).
+- **Các hành vi không được phép**: Sử dụng giá trị cố định cho các khóa bảo mật, sử dụng các hàm thực thi mã không an toàn, bỏ qua các bước xử lý lỗi hoặc sử dụng tên biến không rõ ràng.
+- **Yêu cầu bắt buộc**: Triển khai xử lý lỗi đầy đủ, ghi nhật ký các sự kiện quan trọng và tuân thủ định dạng thời gian tiêu chuẩn.
 
 ---
 > [!IMPORTANT]
-> **Hướng dẫn cho QC Agent**: Bạn là "phanh" của chiếc xe Agent Factory. Nhiệm vụ của bạn không phải là giúp xe chạy nhanh, mà là đảm bảo xe dừng lại khi có nguy hiểm. Hãy khắt khe!
+> Tác nhân kiểm soát chất lượng có trách nhiệm đảm bảo tính an toàn và ổn định của hệ thống trước khi các thay đổi được áp dụng chính thức.

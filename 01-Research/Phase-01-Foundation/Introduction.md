@@ -491,10 +491,50 @@ Lộ trình triển khai hệ thống AI Agent Factory (V4.7) được thiết k
 
 
 ## 16. Các mốc quan trọng (Milestones)
-1.  **M1**: Agent chạy thành công hoàn toàn từ cấu hình.
-2.  **M2**: Quy trình phối hợp đa Agent vận hành ổn định.
-3.  **M3**: Thiết lập hệ thống chấm điểm đáng tin cậy.
-4.  **M4**: Hệ thống thực hiện những bước tự cải thiện đầu tiên.
+
+Hệ thống được phát triển qua 5 giai đoạn chính với các mốc kiểm chứng cụ thể để đảm bảo tính ổn định và tiến hóa theo thời gian.
+
+### Giai đoạn 1: Chuẩn hóa thực thể và Công cụ sơ cấp (Tuần 1 - Tuần 4)
+*Mục tiêu: Thiết lập "Hệ điều hành" quy tắc và giải phóng nguồn lực từ các tác vụ lặp lại.*
+- **Milestone 1.1**: Phê duyệt bộ **Standard Spec v1.0** (bao gồm Coding Convention, API Schema, và Folder Structure) làm khung pháp lý kỹ thuật chung.
+- **Milestone 1.2**: Kích hoạt nhóm **Atomic Agents** (CRUD, Unit Test, Documentation) vận hành độc lập thông qua giao diện CLI.
+- **Milestone 1.3**: Hoàn thiện kho lưu trữ **Centralized Prompt & Config** để đồng bộ hóa hành vi của các tác nhân trên toàn hệ thống.
+
+### Giai đoạn 2: Giao thức phối hợp và Giám sát tính toàn vẹn (Tuần 5 - Tuần 8)
+*Mục tiêu: Xây dựng cơ chế tương tác đa tác nhân và bảo vệ cấu trúc hệ thống cốt lõi.*
+- **Milestone 2.1**: Triển khai thành công **Handoff Protocol**, cho phép truyền dữ liệu ngữ cảnh giữa các Agent thông qua các tệp trạng thái (State files).
+- **Milestone 2.2**: Vận hành **Folder Guardian Agent** để ngăn chặn tuyệt đối các lỗi phân mảnh thư mục và sai lệch quy hoạch mã nguồn.
+- **Milestone 2.3**: Thiết lập quy trình **Human-in-the-loop (HITL)** để kiểm soát và phê duyệt các kết quả đầu ra quan trọng trước khi chuyển bước.
+
+### Giai đoạn 3: Tự động hóa vận hành và Quan sát (Tuần 9 - Tuần 12)
+*Mục tiêu: Đưa Agent vào môi trường thực thi tự động và thiết lập hệ thống giám sát tập trung.*
+- **Milestone 3.1**: Tích hợp Agent vào **CI/CD Pipeline**, cho phép kích hoạt dựa trên sự kiện (Event-driven) như Push hoặc Merge Request.
+- **Milestone 3.2**: Vận hành **Quality Gate Agent** để tự động kiểm định mã nguồn và từ chối các thay đổi không đạt chuẩn bảo mật hoặc logic.
+- **Milestone 3.3**: Hoàn thiện hệ thống **Centralized Logging & Observability**, cho phép truy vết luồng suy luận (Reasoning Path) của Agent trực quan trên Dashboard.
+
+### Giai đoạn 4: Bộ lập hoạch tự trị và Vòng lặp hiệu chỉnh (Tuần 13 - Tuần 16)
+*Mục tiêu: Chuyển dịch từ thực thi kịch bản cứng sang lập kế hoạch dựa trên mục tiêu (Goal-oriented).*
+- **Milestone 4.1**: Kích hoạt **Autonomous Planner** với khả năng tự phân rã User Story thành danh sách các Task kỹ thuật chi tiết.
+- **Milestone 4.2**: Triển khai cơ chế **Dynamic Dispatching**, tự động điều phối Agent dựa trên năng lực và trạng thái thực tế của hệ thống.
+- **Milestone 4.3**: Vận hành vòng lặp **Self-Correction**, cho phép Agent tự hiệu chỉnh dựa trên phản hồi của Quality Gate trước khi yêu cầu can thiệp từ con người.
+
+### Giai đoạn 5: Factory Engine V4.7 và Hệ thống tự tiến hóa (Tuần 17 - Tuần 24)
+*Mục tiêu: Hoàn thiện lớp điều phối chiến lược và tối ưu hóa trí tuệ dài hạn.*
+- **Milestone 5.1**: Vận hành **Control Plane V4.7** để quản lý trạng thái toàn cục, tối ưu hóa chi phí Token và xử lý các ngoại lệ cấp cao.
+- **Milestone 5.2**: Kích hoạt **Cognitive Memory Bridge**, sử dụng Vector DB để lưu trữ và tái sử dụng các "bài học kinh nghiệm" từ các lỗi sai trong quá khứ.
+- **Milestone 5.3**: Triển khai **Meta-Agent Generator**, cho phép hệ thống tự sản sinh cấu hình Agent mới khi phát hiện các lỗ hổng về năng lực xử lý.
+- **Milestone 5.4**: Hoàn tất vòng lặp **Self-Evolution**, hệ thống tự động cập nhật Standard Spec và System Prompt dựa trên phân tích hiệu suất thực tế.
+
+### Bảng Tổng hợp Tiến độ và Sản phẩm Bàn giao (Deliverables)
+
+| Giai đoạn | Vai trò Agent | Sản phẩm bàn giao chính | Trạng thái kỳ vọng |
+| :--- | :--- | :--- | :--- |
+| **1. Nền tảng** | Tools | Standard Spec, Atomic Bots | Hiệu suất tăng 30% |
+| **2. Phối hợp** | Assistant | Handoff Protocol, Guardian | Giảm 90% lỗi cấu trúc |
+| **3. Vận hành** | Worker | CI/CD Integration, Quality Gate | Tự động hóa 70% Review |
+| **4. Tự trị** | Manager | Autonomous Planner, Scoring | Giảm 80% công tác điều phối |
+| **5. V4.7 Factory** | Factory | Control Plane, Memory Bridge | Hệ thống tự tiến hóa |
+
 
 ## 17. Lưu ý thực tế (Reality Check)
 - **Sai lầm phổ biến**: Tập trung vào khả năng tự tiến hóa (Phase 4) khi nền tảng vận hành (Phase 1, 2) chưa thực sự ổn định.

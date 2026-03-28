@@ -1,21 +1,23 @@
 # Debug Guide
 
-## 1. Step 1: Read Summary
-- Mở `incident-summary.md` (3 giây).
-- Tìm `loop_breaker` và `human_hint`.
+Ops phải làm gì khi system chết?
 
-## 2. Step 2: Check Event Log
-- Đối soát timestamp trong `event-log.md`.
-- Tìm nguyên nhân gốc rễ (stdout/stderr).
+## 1. Checkout Event Log
+Mở file log mới nhất trong .v47/logs/
+- Tìm từ khóa "error" hoặc "fail".
+- Xem action cuối cùng trước khi dừng.
 
-## 3. Step 3: Identify Source
-- Lỗi do Planner (sai logic) hay Runner (sai môi trường)?
+## 2. Check Incident Summary
+Đọc file summary.json được sinh ra ở folder output.
+- Đọc field "human_input_required".
+- Kiểm tra branch/repo có đang bị lock hoặc lỗi phân quyền không.
 
-## 4. Step 4: Fix
-- Manual update `state.json` hoặc fix code trực tiếp.
+## 3. Common Quick Fixes
+- Hết Token: Nạp thêm API key hoặc tăng limit.
+- Loop mãi: Thay đổi Prompt goal để clear hơn.
+- Invariant block: Kiểm tra xem agent có đang cố tình phá hoại hệ thống không (Design Drift).
 
-## 5. Example Case
-- **Problem**: Login 404.
-- **Trace**: Runner reported 404.
-- **Summary**: Missing route in `app.js`.
-- **Action**: Manually add `app.post('/login', ...)`.
+## 4. Replay Mode
+Muốn debug sâu?
+- Chạy: v47-cli replay --log path/to/log.json
+- Quan sát từng bước nhảy của agent để hiểu tại sao nó quyết định sai.

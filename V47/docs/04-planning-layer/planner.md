@@ -1,15 +1,15 @@
 # Planner (LLM)
 
 ## 1. Role
-👉 **LLM được dùng để làm gì?**
-- **Suggest next action**: Đề xuất hành động kỹ thuật dựa trên NLP goal.
-- **Decompose task**: Chia nhỏ Roadmap thành các bước thực thi.
+LLM được dùng để làm gì?
+- Suggest next action: Đề xuất hành động kỹ thuật dựa trên NLP goal.
+- Decompose task: Chia nhỏ Roadmap thành các bước thực thi.
 
 ## 2. Constraints
-👉 **KHÔNG được làm gì?**
-- **Cannot execute**: Không có quyền truy cập trực tiếp vào shell/fs.
-- **Cannot bypass rules**: Phải đi qua Invariant Guard.
-- **Cannot store state**: Phải là Stateless.
+KHÔNG được làm gì?
+- Cannot execute: Không có quyền truy cập trực tiếp vào shell/fs.
+- Cannot bypass rules: Phải đi qua Invariant Guard.
+- Cannot store state: Phải là Stateless.
 
 ## 3. Input
 ```json

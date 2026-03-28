@@ -1,17 +1,19 @@
 # Roadmap
 
-## Phase 1
-- **Core loop**: Cấu trúc while-loop điều phối.
-- **Runner**: Thực thi bash/fs cơ bản.
+Tiếp theo build gì?
 
-## Phase 2
-- **Event log**: Ghi log thực thi chi tiết.
-- **Summary**: Incident Summary engine (Rule-based).
+## Phase 4.7: Foundation
+- Xây dựng Agent Factory và Runtime Manager.
+- Tích hợp SAc cho các dự án đơn lẻ.
 
-## Phase 3
-- **Invariant guard**: Chốt bảo mật và thiết kế.
-- **Evaluator**: Scoring & Progress assessment.
+## Phase 5.0: Multi-Planner
+- Hỗ trợ nhiều LLM cùng lập kế hoạch (GPT-4 + Claude 3).
+- Chế độ "Shadow Testing" cho các action nguy hiểm.
 
-## Phase 4
-- **LLM planner**: Hierarchical planning (Strategic/Tactical).
-- **Self-evolution**: Failure Memory integration.
+## Phase 5.5: Failure Memory
+- Agent tự học từ các Incident Summary cũ.
+- "Experience Cache" để không lặp lại lỗi.
+
+## Phase 6.0: Self-Evolution
+- Factory tự thiết kế và sinh ra các Agent Generator mới.
+- Hệ thống hoàn toàn tự vận hành (Autonomous loops).

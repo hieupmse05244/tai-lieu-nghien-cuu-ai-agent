@@ -1,8 +1,12 @@
 # Contracts - V4.7
 
-👉 **Các layer nói chuyện với nhau bằng gì?**
+Các layer nói chuyện với nhau bằng gì?
 
-`Contracts` là bộ quy tắc định dạng dữ liệu giúp các thành phần khác nhau của V4.7 hiểu được nhau một cách chuẩn xác. Thiết kế theo nguyên tắc: **Simple → Strict → Extensible**.
+Contracts là bộ quy tắc định dạng dữ liệu giúp các thành phần khác nhau của V4.7 hiểu được nhau một cách chuẩn xác. Thiết kế theo nguyên tắc: Simple → Strict → Extensible.
+
+> [!IMPORTANT]
+> Toàn bộ các định dạng Strict JSON Schema (production-ready) được lưu trữ tại:
+> 👉 [JSON Schemas - V4.7](file:///Users/hieupm/Desktop/MyCodes/Self%20evolve%20AI%20agent%20system/V47/docs/07-contracts/json-schemas.md)
 
 ---
 
@@ -107,7 +111,7 @@ export type ErrorCode =
 ---
 
 ## 🟦 5. Action Registry & Runner Contract
-*(Giữ nguyên từ mô hình trước, áp dụng bên trong mỗi Agent Runtime)*
+(Giữ nguyên từ mô hình trước, áp dụng bên trong mỗi Agent Runtime)
 
 ### Runner Output
 ```json
@@ -160,4 +164,4 @@ export type ErrorCode =
 ---
 
 ## 🎯 End-to-End Flow Mapping (V4.7)
-**User** → **Gateway** → **SAc** → **Agent Generator** → **Runtime Manager** → **Orchestrator** ↔ **Agent Runtimes (Dev/Test)** → **Event Log** → **Evaluator** → **Human**.
+User → Gateway → SAc → Agent Generator → Runtime Manager → Orchestrator ↔ Agent Runtimes (Dev/Test) → Event Log → Evaluator → Human.

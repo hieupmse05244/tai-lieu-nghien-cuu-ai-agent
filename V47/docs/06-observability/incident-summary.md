@@ -1,9 +1,9 @@
 # Incident Summary Engine
 
 ## 1. Goal
-👉 **Human hiểu failure trong 3 giây.**
-- **Clarity**: Loại bỏ noise từ logs rác.
-- **Actionable**: Chỉ ra điểm cần can thiệp manual.
+Human hiểu failure trong 3 giây.
+- Clarity: Loại bỏ noise từ logs rác.
+- Actionable: Chỉ ra điểm cần can thiệp manual.
 
 ## 2. Input Contract
 ```json
@@ -14,7 +14,7 @@
 }
 ```
 
-## 3. Output Contract (3-second format) ⭐
+## 3. Output Contract (3-second format)
 ```json
 {
   "critical_failure": "PERMISSION_DENIED",
@@ -29,9 +29,9 @@
 ```
 
 ## 4. Rules
-* extract last error from event log.
-* map to known patterns (The Loop Crisis, Design Drift).
-* avoid conversational text, follow JSON schema strictly.
+- Extract last error from event log.
+- Map to known patterns (The Loop Crisis, Design Drift).
+- Avoid conversational text, follow JSON schema strictly.
 
 ## 5. No LLM requirement
 Engine này chạy bằng Logic xác định (Rule-based) để đảm bảo tốc độ và độ tin cậy tuyệt đối trong việc báo cáo sự cố.

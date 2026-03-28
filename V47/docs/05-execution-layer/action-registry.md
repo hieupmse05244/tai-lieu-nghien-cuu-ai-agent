@@ -1,20 +1,21 @@
 # Action Registry
 
-## 1. Purpose
-👉 **System biết action nào hợp lệ?**
-- **Define allowed actions**: Danh sách trắng (Whitelist) các lệnh AI được phép dùng.
-- **Map to handlers**: Kết nối tên action với code thực thi.
+## 1. Goal
+Hệ thống có những công cụ gì?
+- Capability mapping: Danh sách các function/tool mà Agent được phép gọi.
+- Schema verification: Ràng buộc tham số truyền vào tool.
 
-## 2. Schema
+## 2. Action Example
 ```json
 {
-  "name": "write_file",
-  "params": { "path": "string", "content": "string" },
-  "handler": "lib/fs/write.js"
+  "name": "delete_file",
+  "description": "Delete a file from system",
+  "params_schema": { "path": "string" },
+  "safe": false,
+  "requires_permission": true
 }
 ```
 
-## 3. Validation Rules
-- Type checking cho parameters.
-- Path sanitization (ngăn chặn directory traversal).
-- Required fields enforcement.
+## 3. Maintenance
+- Thêm mới action: Cần định nghĩa handler (code thực thi) và schema (quy tắc gọi).
+- Phân quyền: Gắn tag cho các action nguy hiểm (unsafe).

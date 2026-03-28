@@ -1,24 +1,28 @@
 # Invariant Guard
 
-## 1. Purpose
-👉 **System bị chặn khi nào?**
-- **Prevent unsafe actions**: Ngăn chặn xóa file hệ thống, thay đổi quyền root.
-- **Design Locking**: Chặn các hành vi làm "Trôi dạt thiết kế" (Design Drift).
+## 1. Goal
+Hệ thống có đang đi chệch hướng không? (Safety & Design Integrity)
+- Rule-based blocking: Chặn các hành động vi phạm quy tắc hệ thống.
+- Design Drift prevention: Ngăn chặn Agent tự ý thay đổi cấu trúc cốt lõi.
 
-## 2. Rule Format
+## 2. Invariant Rules Examples
+- No deletion of .git or docs/ directories.
+- No external network requests unless whitelisted.
+- Max token usage per action < 5000.
+- Mandatory code review step for critical modules.
+
+## 3. Logic
+- Validation: Mỗi hành động từ Planner phải đi qua Guard.
+- Decision: Allowed | Blocked.
+- Feedback: Nếu Blocked, trả về lý do cụ thể để Planner điều chỉnh (Self-correction).
+
+## 4. Input / Output
+- Input: Action request, Action Registry, Current context.
+- Output: 
 ```json
 {
-  "rule": "NO_DELETE_SYSTEM_FILES",
-  "condition": "action.type == 'delete' && file.is_internal == true",
-  "action": "BLOCK"
+  "allowed": false,
+  "reason": "Cannot delete system files",
+  "code": "INVARIANT_VIOLATION"
 }
 ```
-
-## 3. Examples
-* **API_LOCK**: Chặn thay đổi `Contract.spec.md` sau giai đoạn khởi tạo.
-* **FS_SAFETY**: Chặn lệnh `rm -rf` trên các thư mục gốc.
-
-## 4. When Triggered
-- Kế hoạch từ Planner vi phạm Rule.
-- Runner phát hiện lệnh thực thi nằm trong Blacklist.
-- Trạng thái hệ thống lệch pha (Desync) nghiêm trọng.

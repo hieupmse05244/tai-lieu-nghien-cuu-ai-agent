@@ -1,0 +1,102 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleType {
+  ADMIN
+  CONFIGURATOR
+  USER
+}
+
+enum ResourceType {
+  FILE
+  FOLDER
+}
+
+enum PermissionLevel {
+  READ
+  WRITE
+}
+
+model Role {
+  id    Int      @id @default(autoincrement())
+  name  RoleType @unique
+  users User[]
+}
+
+model User {
+  id            String       @id @default(uuid())
+  email         String       @unique
+  password      String?      // Nullable for OAuth users
+  roleId        Int
+  role          Role         @relation(fields: [roleId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  
+  managedGroups Group[]      @relation("GroupCreator")
+  groups        UserGroup[]
+  resources     Resource[]   @relation("ResourceOwner")
+  permissions   Permission[] @relation("UserPermissions")
+}
+
+model Group {
+  id          String       @id @default(uuid())
+  name        String
+  createdBy   String
+  creator     User         @relation("GroupCreator", fields: [createdBy], references: [id])
+  createdAt   DateTime     @default(now())
+  
+  users       UserGroup[]
+  permissions Permission[] @relation("GroupPermissions")
+}
+
+model UserGroup {
+  userId  String
+  groupId String
+  user    User   @relation(fields: [userId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id])
+
+  @@id([userId, groupId])
+}
+
+model Resource {
+  id                 String       @id @default(uuid())
+  name               String
+  type               ResourceType
+  parentId           String?
+  parent             Resource?    @relation("SubResources", fields: [parentId], references: [id])
+  subResources       Resource[]   @relation("SubResources")
+  uri                String?      // S3 URI for files
+  ownerId            String
+  owner              User         @relation("ResourceOwner", fields: [ownerId], references: [id])
+  inheritanceEnabled Boolean      @default(true)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  permissions        Permission[]
+}
+
+model Permission {
+  id          String          @id @default(uuid())
+  resourceId  String
+  resource    Resource        @relation(fields: [resourceId], references: [id])
+  
+  userId      String?
+  user        User?           @relation("UserPermissions", fields: [userId], references: [id])
+  
+  groupId     String?
+  group       Group?          @relation("GroupPermissions", fields: [groupId], references: [id])
+  
+  level       PermissionLevel
+  
+  createdAt   DateTime        @default(now())
+
+  @@index([resourceId])
+  @@index([userId])
+  @@index([groupId])
+}

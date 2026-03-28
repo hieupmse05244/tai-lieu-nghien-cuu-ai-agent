@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: doc-mgmt-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin123}
+      POSTGRES_DB: ${DB_NAME:-doc_mgmt_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+  storage:
+    image: minio/minio
+    container_name: doc-mgmt-storage
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - app-net
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - storage
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://storage:9000 ${MINIO_ROOT_USER:-minioadmin} ${MINIO_ROOT_PASSWORD:-minioadmin};
+      /usr/bin/mc mb myminio/documents;
+      /usr/bin/mc policy set public myminio/documents;
+      exit 0;
+      "
+    networks:
+      - app-net
+
+  backend:
+    build: ./backend
+    container_name: doc-mgmt-backend
+    restart: always
+    depends_on:
+      - db
+      - storage
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-admin}:${DB_PASSWORD:-admin123}@db:5432/${DB_NAME:-doc_mgmt_db}?schema=public
+      MINIO_ENDPOINT: storage
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MINIO_BUCKET: documents
+      JWT_SECRET: super-secret-key-change-it-later
+      PORT: 4000
+      NODE_ENV: development
+    networks:
+      - app-net
+
+  frontend:
+    build: ./frontend
+    container_name: doc-mgmt-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
+    networks:
+      - app-net
+
+volumes:
+  postgres_data:
+  minio_data:
+
+networks:
+  app-net:
+    driver: bridge

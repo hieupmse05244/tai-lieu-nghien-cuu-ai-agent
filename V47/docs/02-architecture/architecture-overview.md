@@ -1,32 +1,58 @@
 # Architecture Overview
 
 ## 1. Layers
-V4.7 được chia làm 4 layer cốt lõi:
-- **Control Layer**: Điều phối vòng lặp và đảm bảo quy tắc bất biến.
-- **Planning Layer**: Hỗ trợ từ AI để đề xuất hành động.
-- **Execution Layer**: Thực hiện thao tác vật lý trên môi trường.
-- **Observability Layer**: Lưu trữ và phân tích nhật ký sự kiện.
+Hệ thống V4.7 (Agent Factory) được kiến trúc theo 3 tầng chính để đảm bảo tính xác định và khả năng mở rộng:
 
-## 2. Full Diagram
+- **Interface Layer**: Gateway tiếp nhận, chuẩn hóa yêu cầu và xác thực.
+- **Agent Factory Layer**: "Bộ não" thiết kế, sinh ra và điều phối các đơn vị thực thi (Agent Runtimes).
+- **Agent Runtime Layer**: Các tác nhân thực thi nhiệm vụ cụ thể (Dev, Test, Research, Data Processing).
+
+## 2. Full Diagram (HLD)
 ```mermaid
 flowchart TD
-    User --> Gateway
-    Gateway --> ControlPlane
-    ControlPlane --> Planner
-    ControlPlane --> Runner
-    Runner --> EventLog
-    EventLog --> SummaryEngine
-    SummaryEngine --> Human
+    User --> Gateway[Gateway]
+    
+    subgraph Interface_Layer["1. Interface Layer"]
+        Gateway
+    end
+    
+    subgraph Factory_Layer["2. Agent Factory Layer (Core)"]
+        SAc[SAc: Solution Architect]
+        Gen[Agent Generator]
+        Reg[(Agent Registry)]
+        Mgr[Runtime Manager]
+        Orch[Multi-Agent Orchestrator]
+        
+        SAc --> Gen
+        Gen --> Reg
+        Reg --> Mgr
+        Mgr --> Orch
+    end
+    
+    subgraph Runtime_Layer["3. Agent Runtime Layer"]
+        AgentA[Dev Agent Runtime]
+        AgentB[Test Agent Runtime]
+        AgentC[... Agent Runtime]
+    end
+    
+    Gateway --> SAc
+    Orch --> AgentA
+    Orch --> AgentB
+    Orch --> AgentC
+    
+    AgentA -.-> Orch
+    AgentB -.-> Orch
 ```
 
-## 3. Data Flow
-1. **Input**: User gửi Request qua Gateway tới Control Plane.
-2. **Plan**: Control Plane hỏi Planner về bước tiếp theo.
-3. **Run**: Runner thực thi Action được Planner đề xuất.
-4. **Log**: Event Log ghi lại mọi kết quả và trạng thái.
-5. **Human**: Summary Engine báo cáo cho Human nếu có sự cố hoặc cần phê duyệt.
+## 3. Data Flow (End-to-End)
+1. **User Request**: Người dùng gửi yêu cầu qua Gateway tới **SAc (Solution Architect)**.
+2. **Design Solution**: SAc phân tích yêu cầu, thiết kế bản vẽ (Blueprint) và quyết định luồng làm việc (Workflow).
+3. **Generate & Store**: **Agent Generator** tạo ra định nghĩa cho các Agent (Prompt, Tool, Config) và lưu vào **Agent Registry**.
+4. **Provision**: **Runtime Manager** khởi tạo các môi trường Agent Runtime tương ứng.
+5. **Orchestration**: **Multi-Agent Orchestrator** điều phối luồng giao tiếp giữa các Agent (ví dụ: Dev thực thi -> Test kiểm tra -> Dev sửa lỗi).
 
 ## 4. Design Principles
-* **Separation of concerns**: Tách biệt logic Plan và Execute.
-* **Deterministic core**: Lớp điều phối chạy bằng logic code xác định.
-* **Bounded AI**: Giới hạn quyền năng của LLM trong các Guardrails.
+* **Separation of Concerns**: Factory (Thiết kế) ≠ Runtime (Thực thi).
+* **Agent = Disposable**: Agent được tạo ra và hủy bỏ linh hoạt theo nhu cầu công việc.
+* **Everything is Config**: Agent được định nghĩa bằng cấu hình, cho phép tái sử dụng và kiểm soát phiên bản.
+* **LLM where it fits**: LLM chỉ dùng để thiết kế (SAc) và lập kế hoạch hành động (Planner trong Runtime), việc thực thi phải deterministic.
